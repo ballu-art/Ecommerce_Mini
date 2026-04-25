@@ -1,0 +1,155 @@
+<footer>
+  <!-- Main Content -->
+  <div class="footer-main">
+
+    <!-- Brand Block -->
+    <div>
+      <a routerLink="/" class="flex items-center gap-2 cursor-pointer hover:opacity-90 transition-opacity">
+        <img src="/images/logo.png" alt="Vinayak Logo" class="footer-logo-img">
+      </a>
+      <p class="footer-logo-name">Balluart</p>
+      <p class="footer-logo-tagline">Construction Chemicals</p>
+      <div class="footer-gold-line"></div>
+      <p class="footer-desc">
+        Delivering innovative construction chemical solutions with premium quality,
+        advanced technology, and decades of industry experience.
+      </p>
+      <div class="footer-social-row">
+        <!-- Facebook -->
+        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn footer-social-facebook" title="Follow on Facebook" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+        </a>
+
+        <!-- Instagram -->
+        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn footer-social-instagram" title="Follow on Instagram" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <circle cx="17.5" cy="6.5" r="1.5"></circle>
+          </svg>
+        </a>
+
+        <!-- WhatsApp -->
+        <a href="https://wa.me/918401777499" target="_blank" rel="noopener noreferrer" class="footer-social-btn footer-social-whatsapp" title="Chat on WhatsApp" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.288.697 4.411 1.889 6.188L.542 23.458c-.313.813.145 1.73.969 1.73.223 0 .45-.055.669-.169l6.324-3.261C10.589 23.303 11.273 23.5 12 23.5c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.5c-.619 0-1.212-.085-1.78-.243l-1.275.658 1.79-4.662c1.067.823 2.383 1.309 3.783 1.309 5.523 0 10-4.477 10-10S17.523 2.5 12 2.5 2 6.977 2 12c0 5.523 4.477 10 10 10z"/>
+            <path d="M8.5 11c.827 0 1.5.673 1.5 1.5S9.327 14 8.5 14 7 13.327 7 12.5 7.673 11 8.5 11zm3.5 0c.827 0 1.5.673 1.5 1.5s-.673 1.5-1.5 1.5-1.5-.673-1.5-1.5.673-1.5 1.5-1.5zm3.5 0c.827 0 1.5.673 1.5 1.5s-.673 1.5-1.5 1.5-1.5-.673-1.5-1.5.673-1.5 1.5-1.5z"/>
+          </svg>
+        </a>
+
+        <!-- IndiaMART -->
+        <a href="https://www.indiamart.com" target="_blank" rel="noopener noreferrer" class="footer-social-btn footer-social-indiamart" title="Visit on IndiaMART" aria-label="IndiaMART">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <text x="2" y="19" font-size="16" font-weight="bold" font-family="Arial">iM</text>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div>
+      <p class="footer-col-title">Quick Links</p>
+      <ul class="footer-links-list">
+        <li>
+          <a routerLink="/">
+            <span class="footer-link-dot"></span>Home
+          </a>
+        </li>
+        <li>
+          <a routerLink="/products">
+            <span class="footer-link-dot"></span>Products
+          </a>
+        </li>
+        <li>
+          <a routerLink="/about">
+            <span class="footer-link-dot"></span>About Us
+          </a>
+        </li>
+        <li>
+          <a routerLink="/contact">
+            <span class="footer-link-dot"></span>Contact
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Product Categories -->
+    <div>
+      <p class="footer-col-title">Product Categories</p>
+      <ul class="footer-links-list">
+        <li *ngFor="let category of categories">
+          <a [routerLink]="['/products', category.slug]">
+            <span class="footer-link-dot"></span>{{ category.name }}
+          </a>
+        </li>
+      </ul>
+    </div> 
+
+    <!-- Contact Info -->
+    <div>
+      <p class="footer-col-title">Contact Info</p>
+
+      <div class="footer-contact-item">
+        <div class="footer-contact-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.37a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+        </div>
+        <div>
+          <span class="footer-contact-label">Phone</span>
+          <div class="footer-contact-value">
+            <a href="tel:+918401777499">+91 84603 15245</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-contact-item">
+        <div class="footer-contact-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </div>
+        <div>
+          <span class="footer-contact-label">Email</span>
+          <div class="footer-contact-value">
+            <a href="mailto:info.balluart@gmail.com">info.balluart@gmail.com</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-contact-item">
+        <div class="footer-contact-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+        </div>
+        <div>
+          <span class="footer-contact-label">Address</span>
+          <div class="footer-contact-value">Surendranagar, Gujarat, India</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="footer-bottom-wrapper">
+    <div class="footer-bottom">
+      <p class="footer-copyright">
+        Copyright &copy; {{ currentYear }} <span>balluart</span>. All rights reserved.
+      </p>
+      <div class="footer-badges">
+        <span class="footer-badge">ISO Certified</span>
+        <span class="footer-badge">Made in India</span>
+      </div>
+      <p class="footer-developer">
+        Developed & Maintained by: <span>Baldev Makwana</span>
+      </p>
+    </div>
+  </div>
+
+</footer>

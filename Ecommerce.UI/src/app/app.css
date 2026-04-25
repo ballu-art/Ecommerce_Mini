@@ -1,0 +1,153 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+main {
+  min-height: 100%;
+}
+
+/* ============================================================
+   FLOATING WHATSAPP BUTTON - Professional Design
+   ============================================================ */
+
+.floating-whatsapp-btn {
+  /* Fixed positioning - stays at bottom-right while scrolling */
+  position: fixed !important;
+  bottom: 24px !important;
+  right: 24px !important;
+  z-index: 9999 !important;
+  
+  /* Display properties */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px;
+  
+  /* Styling */
+  background: linear-gradient(135deg, #25d366 0%, #20ba63 100%);
+  color: #ffffff;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  cursor: pointer;
+  
+  box-shadow: 0 8px 28px rgba(37, 211, 102, 0.35);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  
+  overflow: hidden;
+  height: auto;
+  width: auto;
+  
+  /* Ensure visibility */
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Shine effect */
+.floating-whatsapp-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.floating-whatsapp-btn:hover::before {
+  transform: translateX(100%);
+}
+
+/* Hover state */
+.floating-whatsapp-btn:hover {
+  background: linear-gradient(135deg, #34d399 0%, #25d366 100%);
+  border-color: #25d366;
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(37, 211, 102, 0.45);
+}
+
+.floating-whatsapp-btn:active {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+}
+
+/* Icon styling */
+.whatsapp-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  animation: whatsapp-bounce 1.8s ease-in-out infinite;
+}
+
+@keyframes whatsapp-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.floating-whatsapp-btn:hover .whatsapp-icon {
+  animation: none;
+}
+
+.whatsapp-icon svg {
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+/* Text styling */
+.whatsapp-text {
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  color: #ffffff;
+  position: relative;
+  z-index: 2;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .floating-whatsapp-btn {
+    bottom: 16px !important;
+    right: 16px !important;
+    padding: 12px 16px;
+    font-size: 13px;
+    gap: 8px;
+    position: fixed !important;
+  }
+
+  .whatsapp-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .whatsapp-text {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-whatsapp-btn {
+    bottom: 12px !important;
+    right: 12px !important;
+    padding: 11px 14px;
+    font-size: 12px;
+    gap: 6px;
+    border-radius: 40px;
+    position: fixed !important;
+    z-index: 9999 !important;
+  }
+
+  .whatsapp-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .whatsapp-text {
+    font-size: 12px;
+  }
+}
