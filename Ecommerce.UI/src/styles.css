@@ -221,6 +221,9 @@ a {
 .bg-gradient-to-r {
   background-color:   #caa74b;
 }
+.bg-gradient-to-grey {
+  background-color:   currentColor;
+}
 .bg-gradient-to-r1 {
   background-image: linear-gradient(to right, var(--primary), #1e3a8a);
 }

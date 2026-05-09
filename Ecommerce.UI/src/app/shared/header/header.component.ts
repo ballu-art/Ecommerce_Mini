@@ -81,8 +81,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   downloadBrochure(): void {
     const link = document.createElement('a');
-    link.href = 'files/Balluart2026.pdf';
-    link.download = 'Balluart2026.pdf';
+    link.href = 'files/BALLUART2026.pdf';
+    link.download = 'BALLUART2026.pdf';
     link.click();
   }
 

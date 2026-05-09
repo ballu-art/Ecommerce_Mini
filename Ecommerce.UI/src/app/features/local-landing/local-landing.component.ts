@@ -41,7 +41,7 @@ import { takeUntil } from 'rxjs/operators';
       <!-- Location Info -->
       <section class="py-16 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 class="text-3xl font-bold text-slate-900 mb-12 text-center">Why Choose ballu art in {{ locationName }}?</h2>
+          <h2 class="text-3xl font-bold text-slate-900 mb-12 text-center">Why Choose Ballu Art in {{ locationName }}?</h2>
           
           <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div class="bg-white rounded-lg p-6 shadow-md hover:shadow-lg transition-shadow">

@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ProductService, Product } from '../../services/product.service';
 import { SeoService } from '../../services/seo.service';
-import { APP_CONSTANTS } from '../../config/constants';
+import { APP_CONSTANTS,Category  } from '../../config/constants';
 
 @Component({
   selector: 'app-admin-products',
@@ -18,8 +18,8 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   // Form and data
   productForm!: FormGroup;
   products: Product[] = [];
-  categories: string[] = [];
-  
+  categories: Category[] = [];
+
   // State management
   isEditMode = false;
   editingProductId: number | null = null;
@@ -153,7 +153,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
    * Load categories from APP_CONSTANTS
    */
   private updateCategories(): void {
-    this.categories = ['all', ...APP_CONSTANTS.CATEGORIES.filter(cat => cat !== 'all')];
+    this.categories = [...APP_CONSTANTS.CATEGORIES.filter(cat => cat.slug !== 'all')];
   }
 
   /**

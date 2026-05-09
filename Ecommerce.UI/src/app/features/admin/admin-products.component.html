@@ -49,7 +49,7 @@
             [class.is-invalid]="hasFieldError('category')"
           >
             <option value="">Select Category</option>
-            <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+            <option *ngFor="let cat of categories" [value]="cat.slug">{{ cat.name  }}</option>
           </select>
           <span class="field-error" *ngIf="hasFieldError('category')">
             {{ getFieldError('category') }}
@@ -247,7 +247,7 @@
     <div class="filter-group">
       <select [(ngModel)]="filterCategory" (change)="onFilterChange()" class="filter-select">
         <option value="all">All Categories</option>
-        <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+        <option *ngFor="let cat of categories" [value]="cat.slug">{{ cat.name  }}</option>
       </select>
     </div>
 

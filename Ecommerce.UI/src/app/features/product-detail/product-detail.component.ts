@@ -106,11 +106,15 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
    * Load product by slug (SEO-friendly URL)
    */
   loadProductsBySlug(slug: string): void {
-    this.productService.getBySlug(slug).subscribe({
-      next: (product) => {
+    // First, load all products from service
+    this.productService.products$.subscribe({
+      next: (allProducts) => {
+        this.products = allProducts; // Store all products
+        
+        // Find the specific product by slug
+        const product = allProducts.find(p => p.slug === slug);
         if (product) {
           this.selectedProduct = product;
-          this.products = [product];
           this.updateBreadcrumbs();
         } else {
           console.warn(`Product with slug "${slug}" not found`);
@@ -136,21 +140,18 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
    * Load related products from the same category
    */
   loadRelatedProducts(): void {
-    if (!this.selectedProduct) return;
+    if (!this.selectedProduct || !this.products.length) return;
     
-    // Get products from the same category
+    // Get products from the same category (excluding current product)
     const sameCategory = this.products.filter(p => 
       p.category === this.selectedProduct?.category && 
       p.id !== this.selectedProduct?.id
     );
     
-    // Sort by rating and take top 5
+    // Sort by rating (highest first) and take top 8
     this.relatedProducts = sameCategory
       .sort((a, b) => b.rating - a.rating)
-      .slice(0, 5);
-    
-    // Also load complementary products from different categories
-    this.loadComplementaryProducts();
+      .slice(0, 8);
   }
 
   /**

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { APP_CONSTANTS } from '../config/constants';
+import { APP_CONSTANTS, API_CONFIG } from '../config/constants';
 
 export interface Product {
   id: number;
@@ -145,7 +145,7 @@ export class ProductService {
     return new Observable(observer => {
       // Find the actual category name from constants (handles slug-to-category conversion)
       const actualCategory = APP_CONSTANTS.CATEGORIES.find(cat => 
-        cat.toLowerCase().replace(/\s+/g, '-') === category.toLowerCase().replace(/\s+/g, '-')
+        cat.slug.toLowerCase().replace(/\s+/g, '-') === category.toLowerCase().replace(/\s+/g, '-')
       );
 
       if (!actualCategory) {
@@ -156,12 +156,15 @@ export class ProductService {
       }
 
       const products = this.productsSubject.value.filter(p => 
-        p.category.toLowerCase() === actualCategory.toLowerCase()
+        p.category.toLowerCase() === actualCategory.slug.toLowerCase()
       );
       observer.next(products);
       observer.complete();
     });
   }
+  /**
+   * CREATE: Add new product and persist to products.json via API
+   */
   addProductLocal(product: Omit<Product, 'id'>): void {
     const newId = this.getNextId();
     const newProduct: Product = {
@@ -170,36 +173,74 @@ export class ProductService {
       liked: false
     };
 
-    const products = [...this.productsSubject.value, newProduct];
-    this.productsSubject.next(products);
-    this.saveToLocalStorage(products);
-    console.log(`Product added: ${newProduct.name}`);
+    // Send to backend API
+    this.http.post(`${API_CONFIG.BASE_URL}/products/create`, newProduct).subscribe({
+      next: (response: any) => {
+        const products = [...this.productsSubject.value, newProduct];
+        this.productsSubject.next(products);
+        this.saveToLocalStorage(products);
+        console.log(`Product added: ${newProduct.name}`);
+      },
+      error: (error) => {
+        console.error('Error adding product to server:', error);
+        // Still update locally if API fails
+        const products = [...this.productsSubject.value, newProduct];
+        this.productsSubject.next(products);
+        this.saveToLocalStorage(products);
+      }
+    });
   }
 
   /**
-   * UPDATE: Update existing product in products.json
+   * UPDATE: Update existing product in products.json via API
    */
   updateProductLocal(product: Product): void {
-    const products = this.productsSubject.value.map(p =>
-      p.id === product.id ? product : p
-    );
-    this.productsSubject.next(products);
-    this.saveToLocalStorage(products);
-    console.log(`Product updated: ${product.name}`);
+    // Send update to backend API
+    this.http.put(`${API_CONFIG.BASE_URL}/products/${product.id}`, product).subscribe({
+      next: (response: any) => {
+        const products = this.productsSubject.value.map(p =>
+          p.id === product.id ? product : p
+        );
+        this.productsSubject.next(products);
+        this.saveToLocalStorage(products);
+        console.log(`Product updated: ${product.name}`);
+      },
+      error: (error) => {
+        console.error('Error updating product on server:', error);
+        // Still update locally if API fails
+        const products = this.productsSubject.value.map(p =>
+          p.id === product.id ? product : p
+        );
+        this.productsSubject.next(products);
+        this.saveToLocalStorage(products);
+      }
+    });
   }
 
   /**
-   * DELETE: Remove product from products.json
+   * DELETE: Remove product from products.json via API
    */
   deleteProductLocal(id: number): void {
-    const products = this.productsSubject.value.filter(p => p.id !== id);
-    this.productsSubject.next(products);
-    this.saveToLocalStorage(products);
-    console.log(`Product deleted (ID: ${id})`);
+    // Send delete to backend API
+    this.http.delete(`${API_CONFIG.BASE_URL}/products/${id}`).subscribe({
+      next: (response: any) => {
+        const products = this.productsSubject.value.filter(p => p.id !== id);
+        this.productsSubject.next(products);
+        this.saveToLocalStorage(products);
+        console.log(`Product deleted (ID: ${id})`);
+      },
+      error: (error) => {
+        console.error('Error deleting product on server:', error);
+        // Still update locally if API fails
+        const products = this.productsSubject.value.filter(p => p.id !== id);
+        this.productsSubject.next(products);
+        this.saveToLocalStorage(products);
+      }
+    });
   }
 
   /**
-   * DELETE MULTIPLE: Remove multiple products from products.json
+   * DELETE MULTIPLE: Remove multiple products from products.json via API
    */
   deleteMultipleProducts(ids: number[]): number {
     const before = this.productsSubject.value.length;
@@ -207,16 +248,29 @@ export class ProductService {
     const deleted = before - products.length;
 
     if (deleted > 0) {
-      this.productsSubject.next(products);
-      this.saveToLocalStorage(products);
-      console.log(`${deleted} products deleted`);
+      // Send bulk delete to backend API
+      this.http.delete(`${API_CONFIG.BASE_URL}/products/bulk/delete`, {
+        body: { ids: ids }
+      }).subscribe({
+        next: (response: any) => {
+          this.productsSubject.next(products);
+          this.saveToLocalStorage(products);
+          console.log(`${deleted} products deleted`);
+        },
+        error: (error) => {
+          console.error('Error deleting products on server:', error);
+          // Still update locally if API fails
+          this.productsSubject.next(products);
+          this.saveToLocalStorage(products);
+        }
+      });
     }
 
     return deleted;
   }
 
   /**
-   * UPDATE MULTIPLE: Bulk update products in products.json
+   * UPDATE MULTIPLE: Bulk update products in products.json via API
    */
   updateMultipleProducts(updates: { id: number; changes: Partial<Product> }[]): number {
     let products = [...this.productsSubject.value];
@@ -231,9 +285,20 @@ export class ProductService {
     });
 
     if (updatedCount > 0) {
-      this.productsSubject.next(products);
-      this.saveToLocalStorage(products);
-      console.log(`${updatedCount} products updated`);
+      // Send bulk update to backend API
+      this.http.put(`${API_CONFIG.BASE_URL}/products/bulk/update`, updates).subscribe({
+        next: (response: any) => {
+          this.productsSubject.next(products);
+          this.saveToLocalStorage(products);
+          console.log(`${updatedCount} products updated`);
+        },
+        error: (error) => {
+          console.error('Error updating products on server:', error);
+          // Still update locally if API fails
+          this.productsSubject.next(products);
+          this.saveToLocalStorage(products);
+        }
+      });
     }
 
     return updatedCount;

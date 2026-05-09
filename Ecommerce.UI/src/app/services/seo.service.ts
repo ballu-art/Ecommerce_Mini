@@ -10,9 +10,9 @@ import { Title, Meta } from '@angular/platform-browser';
   providedIn: 'root'
 })
 export class SeoService {
-  private readonly DEFAULT_TITLE = 'ballu art | Construction Chemicals, Tile Adhesives & Building Solutions Online';
+  private readonly DEFAULT_TITLE = 'Ballu Art | Construction Chemicals, Tile Adhesives & Building Solutions Online';
   private readonly DEFAULT_DESCRIPTION = 'Buy construction chemicals, tile adhesives, waterproofing solutions & bonding agents online. Best prices, fast delivery across India. Quality certified construction materials.';
-  private readonly BRAND = 'ballu art';
+  private readonly BRAND = 'Ballu Art';
 
   constructor(
     private titleService: Title,
@@ -57,12 +57,12 @@ export class SeoService {
    * Set homepage metadata (optimized for main keywords)
    */
   setHomePage(): void {
-    const title = 'Construction Chemicals & Tile Adhesives Online | Buy Waterproofing Solutions | ballu art';
+    const title = 'Construction Chemicals & Tile Adhesives Online | Buy Waterproofing Solutions | Ballu Art';
     const description = 'Buy construction chemicals, tile adhesives & waterproofing solutions online. Shop grouts, bonding agents, surface repair products & construction materials. Fast delivery, best prices, quality certified.';
     
     this.updatePageMeta(title, description, 'https://yourdomain.com/');
     this.updateOGTags(
-      'Buy Construction Chemicals & Tile Adhesives Online - ballu art',
+      'Buy Construction Chemicals & Tile Adhesives Online - Ballu Art',
       'Best construction chemicals, tile adhesives, waterproofing solutions and building materials. Fast delivery across India.'
     );
   }
@@ -71,7 +71,7 @@ export class SeoService {
    * Set products listing page metadata
    */
   setProductsPage(): void {
-    const title = 'Buy Tile Adhesives, Waterproofing & Construction Chemicals Online | ballu art';
+    const title = 'Buy Tile Adhesives, Waterproofing & Construction Chemicals Online | Ballu Art';
     const description = 'Shop 100+ construction chemicals, tile adhesives, waterproofing solutions & bonding agents. Compare prices, expert recommendations, customer reviews. Fast India delivery, best prices guaranteed.';
     
     this.updatePageMeta(title, description, 'https://yourdomain.com/products');
@@ -81,7 +81,7 @@ export class SeoService {
    * Set product detail page metadata (called with dynamic data)
    */
   setProductPage(productName: string, price: number, rating: number, reviews: number, description: string): void {
-    const title = `${productName} - ₹${price} | Buy Online | ballu art`;
+    const title = `${productName} - ₹${price} | Buy Online | Ballu Art`;
     const metaDescription = `${productName} at best price ₹${price}. Rating: ${rating}/5 (${reviews} reviews). ${description.substring(0, 70)}...`;
     
     this.updatePageMeta(title, metaDescription);
@@ -91,7 +91,7 @@ export class SeoService {
    * Set product detail page metadata (alias for product page)
    */
   setProductDetailPage(): void {
-    const title = 'Construction Chemical Product | Tile Adhesive & Building Material | ballu art';
+    const title = 'Construction Chemical Product | Tile Adhesive & Building Material | Ballu Art';
     const description = 'View construction chemical product details, specifications, pricing & reviews. Shop tile adhesives, waterproofing solutions & bonding agents with guaranteed quality & fast delivery.';
     
     this.updatePageMeta(title, description);
@@ -101,8 +101,8 @@ export class SeoService {
    * Set about page metadata
    */
   setAboutPage(): void {
-    const title = 'About ballu art - Top Construction Chemical Supplier & Tile Adhesive Manufacturer India';
-    const description = 'Learn about ballu art - India\'s leading construction chemicals, tile adhesives & waterproofing solutions supplier. Quality certified, trusted by professionals. About our mission & commitment.';
+    const title = 'About Ballu Art - Top Construction Chemical Supplier & Tile Adhesive Manufacturer India';
+    const description = 'Learn about Ballu Art - India\'s leading construction chemicals, tile adhesives & waterproofing solutions supplier. Quality certified, trusted by professionals. About our mission & commitment.';
     
     this.updatePageMeta(title, description, 'https://yourdomain.com/about');
   }
@@ -111,8 +111,8 @@ export class SeoService {
    * Set contact page metadata
    */
   setContactPage(): void {
-    const title = 'Contact ballu art - Construction Chemical Support, Bulk Orders & Inquiries';
-    const description = 'Contact ballu art for tile adhesives, construction chemicals & waterproofing solutions. Bulk orders, product inquiries & support available. Customer support team ready to assist.';
+    const title = 'Contact Ballu Art - Construction Chemical Support, Bulk Orders & Inquiries';
+    const description = 'Contact Ballu Art for tile adhesives, construction chemicals & waterproofing solutions. Bulk orders, product inquiries & support available. Customer support team ready to assist.';
     
     this.updatePageMeta(title, description, 'https://yourdomain.com/contact');
   }
@@ -159,7 +159,7 @@ export class SeoService {
    * Set checkout page metadata
    */
   setCheckoutPage(): void {
-    const title = 'Checkout - Secure Ordering | ballu art Construction Chemicals & Tile Adhesives';
+    const title = 'Checkout - Secure Ordering | Ballu Art Construction Chemicals & Tile Adhesives';
     const description = 'Secure checkout for construction chemicals, tile adhesives & waterproofing solutions. Multiple payment options, fast delivery, easy returns. Complete your construction material order now.';
     
     this.updatePageMeta(title, description, 'https://yourdomain.com/checkout');
@@ -169,8 +169,8 @@ export class SeoService {
    * Set login page metadata
    */
   setLoginPage(): void {
-    const title = 'Login - ballu art Construction Chemicals & Tile Adhesives Online Store';
-    const description = 'Sign in to your ballu art account for construction chemicals & tile adhesives. Track orders, save products, exclusive member discounts on waterproofing solutions & bonding agents.';
+    const title = 'Login - Ballu Art Construction Chemicals & Tile Adhesives Online Store';
+    const description = 'Sign in to your Ballu Art account for construction chemicals & tile adhesives. Track orders, save products, exclusive member discounts on waterproofing solutions & bonding agents.';
     
     this.updatePageMeta(title, description, 'https://yourdomain.com/login');
   }
@@ -179,7 +179,7 @@ export class SeoService {
    * Set admin page metadata
    */
   setAdminPage(): void {
-    const title = 'Admin Dashboard | ballu art Construction Chemicals Management';
+    const title = 'Admin Dashboard | Ballu Art Construction Chemicals Management';
     const description = 'Admin panel for managing construction chemicals, tile adhesives, waterproofing solutions, inventory, orders & product catalog.';
     
     this.updatePageMeta(title, description);

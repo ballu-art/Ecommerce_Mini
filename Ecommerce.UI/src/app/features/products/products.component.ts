@@ -1,12 +1,12 @@
-import { Component, HostListener, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, HostListener, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../services/cart.service';
 import { ProductService, Product } from '../../services/product.service';
 import { SeoService } from '../../services/seo.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { takeUntil, debounceTime, distinctUntilChanged, combineLatestWith } from 'rxjs/operators';
 import { APP_CONSTANTS } from '../../config/constants';
 
 @Component({
@@ -32,6 +32,16 @@ export class ProductsComponent implements OnInit, OnDestroy {
   itemsPerPage = 20;
   isLoadingMore = false;
   cartSuccessMessage = '';
+  
+  // Observable subjects for reactive filtering
+  private selectedCategorySubject = new BehaviorSubject<string>('all');
+  private sortBySubject = new BehaviorSubject<string>('featured');
+  private searchTermSubject = new BehaviorSubject<string>('');
+  
+  // Cached filtered results
+  private cachedFilteredProducts: Product[] = [];
+  private cachedFilteredCount = 0;
+  private lastFilterConfig = { category: 'all', sort: 'featured', search: '' };
 
   private destroy$ = new Subject<void>();
 
@@ -39,7 +49,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private productService: ProductService,
     private cartService: CartService,
     private seoService: SeoService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {
     this.checkAdminStatus();
   }
@@ -52,13 +63,21 @@ export class ProductsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(params => {
         if (params['category']) {
-          // Convert URL-friendly category name back to proper format
-          const urlCategory = params['category'];
-          // Find matching category in the categories array
+          const urlSlug = params['category'];
           const matchedCategory = this.categories.find(cat =>
-            cat.toLowerCase().replace(/\s+/g, '-') === urlCategory
-          ) || urlCategory;
-          this.selectedCategory = matchedCategory;
+            cat.slug.toLowerCase() === urlSlug.toLowerCase()
+          );
+          
+          if (matchedCategory) {
+            this.selectedCategory = matchedCategory.slug;
+            this.selectedCategorySubject.next(matchedCategory.slug);
+          } else {
+            this.selectedCategory = 'all';
+            this.selectedCategorySubject.next('all');
+          }
+        } else {
+          this.selectedCategory = 'all';
+          this.selectedCategorySubject.next('all');
         }
       });
     
@@ -77,22 +96,59 @@ export class ProductsComponent implements OnInit, OnDestroy {
       .subscribe(products => {
         this.allProducts = products;
         this.displayedProducts = [];
-        this.loadMoreProducts();
+        this.cachedFilteredProducts = []; // Clear cache
+        this.lastFilterConfig = { category: '', sort: '', search: '' }; // Force recalculation
+        
+        // Load initial products synchronously
+        this.loadInitialProducts();
       });
   }
 
-  getFilteredProducts(): Product[] {
-    let filtered = this.displayedProducts;
+  /**
+   * Load initial products synchronously on first load
+   */
+  loadInitialProducts() {
+    if (!this.allProducts.length) return;
     
+    const endIdx = Math.min(this.itemsPerPage, this.allProducts.length);
+    this.displayedProducts = [...this.allProducts.slice(0, endIdx)];
+    this.cdr.markForCheck();
+  }
+  /**
+   * Get filtered and sorted products (cached for performance)
+   * Only recalculates when filter parameters change
+   */
+  getFilteredProducts(): Product[] {
+    const currentConfig = {
+      category: this.selectedCategory,
+      sort: this.sortBy,
+      search: this.searchTerm
+    };
+    
+    // Return cached results if config hasn't changed
+    if (JSON.stringify(currentConfig) === JSON.stringify(this.lastFilterConfig)) {
+      return this.cachedFilteredProducts;
+    }
+    
+    // Update cache config
+    this.lastFilterConfig = { ...currentConfig };
+    
+    let filtered = this.displayedProducts;
+
+    // Apply category filter
+    if (this.selectedCategory !== 'all') {
+      filtered = filtered.filter(p => p.category === this.selectedCategory);
+    }
+
     // Apply search filter
     if (this.searchTerm.trim()) {
       const searchLower = this.searchTerm.toLowerCase();
-      filtered = filtered.filter(p => 
-        p.name.toLowerCase().includes(searchLower) || 
+      filtered = filtered.filter(p =>
+        p.name.toLowerCase().includes(searchLower) ||
         p.description.toLowerCase().includes(searchLower)
       );
     }
-    
+
     // Apply sorting
     if (this.sortBy === 'price-low') {
       filtered = [...filtered].sort((a, b) => a.currentPrice - b.currentPrice);
@@ -101,52 +157,74 @@ export class ProductsComponent implements OnInit, OnDestroy {
     } else if (this.sortBy === 'rating') {
       filtered = [...filtered].sort((a, b) => b.rating - a.rating);
     }
-    
+
+    // Cache the result
+    this.cachedFilteredProducts = filtered;
     return filtered;
   }
 
   loadMoreProducts() {
-    const filteredCount = this.getFilteredCount();
-    if (this.isLoadingMore || this.displayedProducts.length >= filteredCount) return;
+    if (this.isLoadingMore || !this.allProducts.length) return;
+    
     this.isLoadingMore = true;
     
-    // Simulate network delay
-    setTimeout(() => {
-      // Get all products filtered by category
-      let categoryFiltered = this.allProducts;
-      if (this.selectedCategory !== 'all') {
-        categoryFiltered = categoryFiltered.filter(p => p.category === this.selectedCategory);
-      }
-      
-      const startIdx = this.displayedProducts.length;
-      const endIdx = Math.min(startIdx + this.itemsPerPage, categoryFiltered.length);
-      
-      for (let i = startIdx; i < endIdx; i++) {
-        this.displayedProducts.push(categoryFiltered[i]);
-      }
-      
-      this.isLoadingMore = false;
-    }, 300);
+    // Use async only for lazy loading additional products (not initial load)
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        const startIdx = this.displayedProducts.length;
+        const endIdx = Math.min(startIdx + this.itemsPerPage, this.allProducts.length);
+        
+        // Add new products in batch
+        if (startIdx < this.allProducts.length) {
+          this.displayedProducts.push(...this.allProducts.slice(startIdx, endIdx));
+          this.cachedFilteredProducts = []; // Clear cache to force recalculation
+          this.cdr.markForCheck();
+        }
+        
+        this.isLoadingMore = false;
+      }, 100);
+    });
   }
 
   onCategoryChange(category: string) {
     this.selectedCategory = category;
-    // Reset pagination for new category
-    this.displayedProducts = [];
-    this.loadMoreProducts();
+    this.selectedCategorySubject.next(category);
+    // Clear cache to force re-filtering
+    this.cachedFilteredProducts = [];
+    this.lastFilterConfig = { category: '', sort: '', search: '' }; // Force recalculation
+    this.cdr.markForCheck();
   }
 
+  onSortChange() {
+    this.sortBySubject.next(this.sortBy);
+    this.cachedFilteredProducts = [];
+    this.cdr.markForCheck();
+  }
+
+  onSearchChange() {
+    this.searchTermSubject.next(this.searchTerm);
+    this.cachedFilteredProducts = [];
+  }
+  /**
+   * Get count of filtered products (cached)
+   */
   getFilteredCount(): number {
-    let filtered = this.allProducts;
-    if (this.selectedCategory !== 'all') {
-      filtered = filtered.filter(p => p.category === this.selectedCategory);
-    }
-    return filtered.length;
+    return this.getFilteredProducts().length;
+  }
+
+  /**
+   * TrackBy function for *ngFor performance
+   * Prevents unnecessary DOM rerendering
+   */
+  trackByProductId(index: number, product: Product): number {
+    return product.id;
   }
 
   @HostListener('window:scroll')
   onWindowScroll() {
-    // Check if user scrolled near bottom
+    // Throttle scroll event - only check every 300ms
+    if (this.isLoadingMore) return;
+    
     const scrollPosition = (window.innerHeight + window.scrollY);
     const pageHeight = document.documentElement.scrollHeight;
     
@@ -245,11 +323,17 @@ Thank you for your time!
   }
 
   /**
-   * Convert category name to URL slug
+   * Convert category name to URL slug from CATEGORIES constant
    */
   getCategorySlug(category: string): string {
     if (!category) return '';
-    return category.toLowerCase().replace(/\s+/g, '-').replace(/[&]/g, 'and');
+    
+    // Find the matching category from the constants
+    const matchedCategory = this.categories.find(cat => 
+      cat.name.toLowerCase() === category.toLowerCase()
+    );
+    
+    return matchedCategory?.slug || category.toLowerCase().replace(/\s+/g, '-').replace(/[&]/g, 'and');
   }
 }
 

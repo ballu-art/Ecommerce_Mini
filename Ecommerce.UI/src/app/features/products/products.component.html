@@ -18,7 +18,8 @@
       <div class="search-wrapper">
         <input 
           type="text" 
-          [(ngModel)]="searchTerm" 
+          [(ngModel)]="searchTerm"
+          (change)="onSearchChange()"
           placeholder="Search products..." 
           class="search-input"
         >
@@ -36,8 +37,8 @@
           (change)="onCategoryChange(selectedCategory)"
           class="category-dropdown"
         >
-          <option *ngFor="let cat of categories" [value]="cat">
-            {{ cat === 'all' ? 'All Products' : cat }}
+           <option *ngFor="let cat of categories" [value]="cat.slug">
+            {{  cat.name }}
           </option>
         </select>
       </div>
@@ -46,7 +47,7 @@
       <div class="filter-dropdown-wrapper">
         <label class="filter-label">Sort:</label>
         <select 
-          [(ngModel)]="sortBy"
+          [(ngModel)]="sortBy" (change)="onSortChange()"
           class="category-dropdown"
         >
           <option value="featured">Featured</option>
@@ -62,11 +63,11 @@
 <!-- Product Grid with Lazy Loading -->
 <section class="bg-white py-8 pb-16">
   <div class="max-w-7xl mx-auto px-2 sm:px-3 lg:px-4">
-    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 mb-6 mt-4">
-      <div 
-        *ngFor="let product of getFilteredProducts()" 
-        class="product-card bg-white flex flex-col group"
-      >
+      <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 mb-6 mt-4">
+        <div 
+          *ngFor="let product of getFilteredProducts(); trackBy: trackByProductId" 
+          class="product-card bg-white flex flex-col group"
+        >
         <!-- Product Image Container - Classic Style -->
         <div class="relative h-52 sm:h-64 md:h-72 flex items-center justify-center bg-gray-50 border border-gray-300 overflow-hidden mb-3 rounded">
           <!-- Product Image -->
