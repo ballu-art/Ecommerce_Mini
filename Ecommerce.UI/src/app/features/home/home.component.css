@@ -6,7 +6,7 @@
   width: 100%;
   height: 70vh;
   overflow: hidden;
-  background: #1f2937;
+  background: linear-gradient(135deg, #2563eb 0%, #111827 100%);
 }
 
 .carousel-container {
@@ -192,13 +192,13 @@
 }
 
 .dot.active {
-  background: #fbbf24;
-  border-color: #f59e0b;
+  background: #2563eb;
+  border-color: #60a5fa;
   transform: scale(1.3);
 }
 
 .dot:hover {
-  background: rgba(251, 191, 36, 0.7);
+  background: rgba(37, 99, 235, 0.7);
   transform: scale(1.2);
 }
 
@@ -233,9 +233,9 @@
 
 /* Primary Button - Solid Gold */
 .btn-primary {
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-  color: #1f2937;
-  border: 2px solid #d97706;
+  background: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%);
+  color: #ffffff;
+  border: 2px solid #1d4ed8;
   padding: 10px 24px;
   font-weight: 700;
   font-size: 14px;
@@ -266,10 +266,10 @@
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #fcd34d 0%, #fbbf24 100%);
-  border-color: #f59e0b;
+  background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+  border-color: #2563eb;
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(251, 191, 36, 0.4);
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
 }
 
 .btn-primary:active {
@@ -295,9 +295,9 @@
 }
 
 .btn-secondary:hover {
-  background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
-  color: #d97706;
-  border-color: #fbbf24;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  color: #2563eb;
+  border-color: #60a5fa;
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
 }
@@ -359,6 +359,178 @@
     padding: 6px 12px;
   }
 }
+/* Trust & Social Proof Section */
+.trust-proof-section {
+  padding: 72px 20px 48px;
+  background: linear-gradient(135deg, #f8fafc 0%, #eef4ff 100%);
+}
+
+.trust-proof-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  gap: 24px;
+}
+
+.trust-proof-intro {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 8px;
+}
+
+.trust-proof-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid #dbeafe;
+  color: #2563eb;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 8px 14px;
+  border-radius: 999px;
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.08);
+  margin-bottom: 16px;
+}
+
+.trust-proof-intro h2 {
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 10px;
+}
+
+.trust-proof-intro p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #475569;
+  margin: 0;
+}
+
+.trust-proof-main-card {
+  display: grid;
+  grid-template-columns: 1.2fr 0.9fr;
+  gap: 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+  position: relative;
+}
+
+.trust-proof-main-card::before {
+  content: '';
+  position: absolute;
+  inset: auto -20px -20px auto;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.17) 0%, rgba(249, 115, 22, 0) 70%);
+  pointer-events: none;
+}
+
+.trust-proof-highlight {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #fff;
+  border-radius: 18px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.trust-proof-highlight-badge {
+  display: inline-block;
+  width: fit-content;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.trust-proof-highlight h3 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin: 0 0 10px;
+  line-height: 1.4;
+}
+
+.trust-proof-highlight p {
+  margin: 0;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.trust-proof-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.trust-proof-stat {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 16px;
+  text-align: left;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.trust-proof-stat:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.1);
+}
+
+.trust-proof-stat-icon {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.trust-proof-stat-number {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.trust-proof-stat-label {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+.trust-proof-badges-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.trust-proof-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+}
+
+.trust-proof-badge-icon {
+  font-size: 1.1rem;
+}
+
+.trust-proof-badge-text {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #334155;
+  line-height: 1.4;
+}
+
 /* Stats Section Background */
 .stats-section {
   background-image: url('/images/black.png');
@@ -383,11 +555,34 @@
 }
 
 
+@media (max-width: 900px) {
+  .trust-proof-main-card {
+    grid-template-columns: 1fr;
+  }
+
+  .trust-proof-badges-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 640px) {
   .btn-primary,
   .btn-secondary {
     padding: 10px 24px;
     font-size: 14px;
+  }
+
+  .trust-proof-section {
+    padding: 56px 16px 36px;
+  }
+
+  .trust-proof-main-card {
+    padding: 20px;
+  }
+
+  .trust-proof-stats-grid,
+  .trust-proof-badges-grid {
+    grid-template-columns: 1fr;
   }
 }
 /* =====================================================

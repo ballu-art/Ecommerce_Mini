@@ -1,11 +1,17 @@
 /* Global Styles */
 :root {
   --primary: #2563eb;
-  --primary-dark: #1e40af;
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
+  --secondary: #60a5fa;
+  --background: #f8fafc;
+  --card: #ffffff;
+  --cta: #f97316;
+  --text: #111827;
+  --primary-dark: #1d4ed8;
+  --accent-soft: #dbeafe;
+  --gray-50: #f8fafc;
+  --gray-100: #eef2ff;
   --gray-600: #4b5563;
-  --gray-700: #374151;
+  --gray-700: #111827;
   --gray-900: #111827;
   --white: #ffffff;
 }
@@ -23,8 +29,8 @@ html {
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
-  color: var(--gray-700);
-  background-color: var(--white);
+  color: var(--text);
+  background: linear-gradient(135deg, var(--background) 0%, var(--gray-100) 100%);
 }
 
 a {
@@ -219,10 +225,10 @@ a {
 }
 
 .bg-gradient-to-r {
-  background-color:   #caa74b;
+  background: linear-gradient(90deg, var(--primary) 0%, #60a5fa 100%);
 }
 .bg-gradient-to-grey {
-  background-color:   currentColor;
+  background: linear-gradient(135deg, var(--background) 0%, var(--accent-soft) 100%);
 }
 .bg-gradient-to-r1 {
   background-image: linear-gradient(to right, var(--primary), #1e3a8a);
@@ -505,6 +511,80 @@ a {
   }
 }
 
+@media (max-width: 768px) {
+  body {
+    background: linear-gradient(135deg, var(--background) 0%, var(--gray-100) 100%);
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  button,
+  a[role="button"] {
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 430px) {
+  body {
+    color: var(--text);
+    background: linear-gradient(135deg, var(--background) 0%, var(--gray-100) 100%);
+  }
+
+  .rounded-lg,
+  .rounded,
+  .rounded-full {
+    border-radius: 12px;
+  }
+
+  .bg-white,
+  .bg-gray-50,
+  .bg-gray-100 {
+    background-color: var(--card);
+  }
+
+  .text-4xl {
+    font-size: 1.8rem;
+  }
+
+  .text-5xl {
+    font-size: 2.2rem;
+  }
+
+  .text-6xl {
+    font-size: 2.6rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .px-4 {
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+
+  .px-6 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .py-12 {
+    padding-top: 2.25rem;
+    padding-bottom: 2.25rem;
+  }
+
+  .py-16 {
+    padding-top: 2.75rem;
+    padding-bottom: 2.75rem;
+  }
+
+  .text-3xl {
+    font-size: 1.5rem;
+  }
+
+  .text-4xl {
+    font-size: 1.7rem;
+  }
+}
+
 @media (max-width: 650px) {
   .hidden {
     display: none;
@@ -525,7 +605,7 @@ a {
 }
 
 .text-yellow-600 {
-  color: #ca8a04;
+  color: #1d4ed8;
 }
 
 .text-yellow-700 {
@@ -533,7 +613,7 @@ a {
 }
 
 .bg-yellow-600 {
-  background-color: #ca8a04;
+  background-color: #1d4ed8;
 }
 
 .bg-yellow-700 {
@@ -549,11 +629,11 @@ a {
 }
 
 .border-yellow-600 {
-  border-color: #ca8a04;
+  border-color: #1d4ed8;
 }
 
 .hover\:bg-yellow-600:hover {
-  background-color: #ca8a04;
+  background-color: #1d4ed8;
 }
 
 .hover\:bg-yellow-700:hover {
@@ -569,7 +649,7 @@ a {
 }
 
 .hover\:text-yellow-600:hover {
-  color: #ca8a04;
+  color: #1d4ed8;
 }
 
 .hover\:text-yellow-700:hover {
@@ -582,7 +662,7 @@ a {
 }
 
 .group:hover .group-hover\:text-yellow-600 {
-  color: #ca8a04;
+  color: #1d4ed8;
 }
 
 .group:hover .group-hover\:scale-110 {
@@ -753,11 +833,11 @@ a {
 }
 
 .focus\:ring-2:focus {
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05), 0 0 0 4px #ca8a04;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05), 0 0 0 4px #1d4ed8;
 }
 
 .focus\:ring-yellow-600:focus {
-  box-shadow: 0 0 0 3px rgba(202, 138, 4, 0.1), 0 0 0 4px #ca8a04;
+  box-shadow: 0 0 0 3px rgba(202, 138, 4, 0.1), 0 0 0 4px #1d4ed8;
 }
 
 /* Select & Form */

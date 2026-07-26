@@ -4,7 +4,7 @@
 
 .checkout-container {
   min-height: 100vh;
-  background-color: #f9fafc;
+  background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
   padding: 24px 16px;
 }
 
@@ -91,7 +91,8 @@
   grid-template-columns: 60px 1fr auto auto;
   gap: 12px;
   padding: 12px;
-  background: #f9fafc;
+  background: #f8fafc;
+  border: 1px solid #dbeafe;
   border-radius: 6px;
   align-items: center;
 }
@@ -121,7 +122,7 @@
 .item-price {
   margin: 4px 0 0 0;
   font-size: 13px;
-  color: #fbbf24;
+  color: #2563eb;
   font-weight: 700;
 }
 
@@ -146,7 +147,7 @@
 }
 
 .item-quantity button:hover {
-  color: #fbbf24;
+  color: #2563eb;
 }
 
 .item-quantity span {
@@ -222,7 +223,7 @@
 }
 
 .price-row.total span:last-child {
-  color: #fbbf24;
+  color: #2563eb;
 }
 
 /* ============================================================
@@ -242,8 +243,8 @@
 
 .btn-continue-shopping {
   padding: 10px 24px;
-  background-color: #fbbf24;
-  color: #111827;
+  background: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%);
+  color: #ffffff;
   border: none;
   border-radius: 4px;
   font-size: 14px;
@@ -253,7 +254,7 @@
 }
 
 .btn-continue-shopping:hover {
-  background-color: #f59e0b;
+  background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
 }
 
 /* ============================================================

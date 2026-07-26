@@ -9,14 +9,14 @@
 /* ---------- CSS Variables ---------- */
 footer {
   --ft-bg:          #111827;
-  --ft-bg-alt:      #1a202c;
-  --ft-gold:        #fbbf24;
-  --ft-gold-light:  #fcd34d;
-  --ft-gold-dim:    #d97706;
-  --ft-text:        #f3f4f6;
-  --ft-text-muted:  #d1d5db;
-  --ft-border:      rgba(251, 191, 36, 0.15);
-  --ft-rule:        rgba(251, 191, 36, 0.25);
+  --ft-bg-alt:      #1f2937;
+  --ft-gold:        #2563eb;
+  --ft-gold-light:  #60a5fa;
+  --ft-gold-dim:    #1d4ed8;
+  --ft-text:        #f8fafc;
+  --ft-text-muted:  #dbeafe;
+  --ft-border:      rgba(37, 99, 235, 0.2);
+  --ft-rule:        rgba(37, 99, 235, 0.3);
 
   font-family: 'DM Sans', sans-serif;
   background: var(--ft-bg);
