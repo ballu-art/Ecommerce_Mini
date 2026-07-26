@@ -1,6 +1,6 @@
 {
-  "buildCommand": "ng build",
-  "outputDirectory": "dist/Ecommerce/browser",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/Ecommerce",
   "framework": "angular",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }

@@ -1,0 +1,9 @@
+{
+  "installCommand": "cd Ecommerce.UI && npm install",
+  "buildCommand": "cd Ecommerce.UI && npm run build",
+  "outputDirectory": "Ecommerce.UI/dist/Ecommerce",
+  "framework": "angular",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
