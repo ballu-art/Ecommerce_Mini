@@ -1,0 +1,7 @@
+{
+  "root": "dist/ecommerce-mini/browser",
+  "clean_urls": false,
+  "routes": {
+    "/**": "index.html"
+  }
+}
