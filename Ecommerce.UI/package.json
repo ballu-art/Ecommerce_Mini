@@ -9,7 +9,7 @@
     "test": "ng test"
   },
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
   },
   "prettier": {
     "printWidth": 100,
